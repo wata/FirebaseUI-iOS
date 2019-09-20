@@ -24,7 +24,7 @@ NS_ASSUME_NONNULL_BEGIN
 /** @var kCornerRadius
     @brief Corner radius of the button.
  */
-static const int kCornerRadius = 2.0f;
+static const int kCornerRadius = 6.0f;
 
 /** @var kDropShadowAlpha
     @brief Opacity of the drop shadow of the button.
@@ -66,7 +66,7 @@ static const CGFloat kFontSize = 12.0f;
   [self setImage:image forState:UIControlStateNormal];
 
   CGFloat paddingTitle = 8.0f;
-  CGFloat paddingImage = 8.0f;
+  CGFloat paddingImage = (frame.size.width - self.imageView.frame.size.width - paddingTitle - self.titleLabel.frame.size.width) / 2;
   BOOL isLTRLayout = [[UIApplication sharedApplication] userInterfaceLayoutDirection] ==
       UIUserInterfaceLayoutDirectionLeftToRight;
   if (isLTRLayout) {

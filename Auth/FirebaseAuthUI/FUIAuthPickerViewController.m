@@ -16,6 +16,8 @@
 
 #import "FUIAuthPickerViewController.h"
 
+#import <AuthenticationServices/AuthenticationServices.h>
+
 #import <FirebaseAuth/FirebaseAuth.h>
 #import "FUIAuthBaseViewController_Internal.h"
 #import "FUIAuthSignInButton.h"
@@ -125,8 +127,18 @@ static const CGFloat kTOSViewHorizontalMargin = 16.0f;
 
   CGRect buttonFrame = CGRectMake(0, 0, kSignInButtonWidth, kSignInButtonHeight);
   for (id<FUIAuthProvider> providerUI in self.authUI.providers) {
-    UIButton *providerButton =
-        [[FUIAuthSignInButton alloc] initWithFrame:buttonFrame providerUI:providerUI];
+    UIControl *providerButton;
+    if ([providerUI.providerID isEqualToString:@"apple.com"]) {
+      if (@available(iOS 13.0, *)) {
+        providerButton = [ASAuthorizationAppleIDButton buttonWithType:ASAuthorizationAppleIDButtonTypeSignIn style:ASAuthorizationAppleIDButtonStyleBlack];
+      } else {
+        NSLog(@"Sign in with Apple is only available on iOS 13+.");
+      }
+      providerButton.frame = buttonFrame;
+    } else {
+      providerButton =
+          [[FUIAuthSignInButton alloc] initWithFrame:buttonFrame providerUI:providerUI];
+    }
     [providerButton addTarget:self
                        action:@selector(didTapSignInButton:)
              forControlEvents:UIControlEventTouchUpInside];
