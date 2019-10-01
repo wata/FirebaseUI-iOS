@@ -57,6 +57,11 @@ static NSString *const kEmailRegex = @".+@([a-zA-Z0-9\\-]+\\.)+[a-zA-Z0-9]{2,63}
  */
 static NSString *const kAuthUICodingKey = @"authUI";
 
+/** @property _alertWindow
+   @brief
+ */
+static UIWindow *_alertWindow = nil;
+
 @implementation FUIAuthBaseViewController {
   /** @var _activityIndicator
       @brief A spinner that is displayed when there's an ongoing activity.
@@ -76,7 +81,7 @@ static NSString *const kAuthUICodingKey = @"authUI";
   if (self) {
     _auth = authUI.auth;
     _authUI = authUI;
-
+    _alertWindow = [[UIWindow alloc] initWithFrame:UIScreen.mainScreen.bounds];
     _activityIndicator = [[self class] addActivityIndicator:self.view];
   }
   return self;
@@ -241,6 +246,10 @@ static NSString *const kAuthUICodingKey = @"authUI";
           presentingViewController:presentingViewController];
 }
 
++ (UIWindow *)alertWindow {
+    return _alertWindow;
+}
+
 + (void)showAlertWithTitle:(nullable NSString *)title
                    message:(nullable NSString *)message
                actionTitle:(nullable NSString *)actionTitle
@@ -282,10 +291,9 @@ static NSString *const kAuthUICodingKey = @"authUI";
   } else {
     UIViewController *viewController = [[UIViewController alloc] init];
     viewController.view.backgroundColor = UIColor.clearColor;
-    UIWindow *window = [[UIWindow alloc] initWithFrame:UIScreen.mainScreen.bounds];
-    window.rootViewController = viewController;
-    window.windowLevel = UIWindowLevelAlert + 1;
-    [window makeKeyAndVisible];
+    [[self class] alertWindow].rootViewController = viewController;
+    [[self class] alertWindow].windowLevel = UIWindowLevelAlert + 1;
+    [[[self class] alertWindow] makeKeyAndVisible];
     [viewController presentViewController:alertController animated:YES completion:nil];
   }
 }

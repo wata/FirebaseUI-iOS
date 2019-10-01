@@ -42,6 +42,11 @@ typedef void (^FUIAuthAlertActionHandler)(void);
  */
 @property(nonatomic, strong, readonly) FUIAuth *authUI;
 
+/** @property alertWindow
+   @brief
+ */
+@property(class, nonatomic, strong, readonly) UIWindow *alertWindow;
+
 /** @fn init
     @brief Please use @c initWithNibName:bundle:authUI:.
  */

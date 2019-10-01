@@ -319,6 +319,7 @@ static NSString *const kEmailLinkSignInLinkingCredentialKey = @"FIRAuthEmailLink
           [authViewController.navigationController dismissViewControllerAnimated:YES completion:nil];
         }
         [self.authUI invokeResultCallbackWithAuthDataResult:authResult URL:nil error:error];
+        [[FUIAuthBaseViewController class] alertWindow].hidden = true;
       };
 
       [FUIAuthBaseViewController showAlertWithTitle:FUILocalizedString(kStr_SignedIn)
@@ -424,6 +425,7 @@ static NSString *const kEmailLinkSignInLinkingCredentialKey = @"FIRAuthEmailLink
         [authViewController.navigationController dismissViewControllerAnimated:YES completion:nil];
       }
       [self.authUI invokeResultCallbackWithAuthDataResult:authResult URL:nil error:error];
+      [[FUIAuthBaseViewController class] alertWindow].hidden = true;
     };
 
     [FUIAuthBaseViewController showAlertWithTitle:FUILocalizedString(kStr_SignedIn)

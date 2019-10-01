@@ -25,6 +25,11 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @interface FUIAuthBaseViewController (Internal)
 
+/** @property alertWindow
+   @brief
+ */
+@property(class, nonatomic, strong, readonly) UIWindow *alertWindow;
+
 /** @fn isValidEmail:
     @brief Statically validates email address.
     @param email The email address to validate.
